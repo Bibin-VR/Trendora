@@ -348,6 +348,14 @@ const FeaturedSection = () => {
               ))}
             </div>
           </div>
+          <div className={`border-t ${borderLine} pt-6 mt-2 flex items-center justify-center`}>
+            <span
+              className={`${isDark ? 'text-white/20' : 'text-black/20'} text-[11px] tracking-[0.5em] uppercase`}
+              style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: '0.6em' }}
+            >
+              BIBIN V R
+            </span>
+          </div>
         </div>
       </footer>
     </>

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import IntroScreen from "./components/IntroScreen";
 import HeroSection from "./components/HeroSection";
@@ -13,9 +12,7 @@ import CheckoutPage from "./components/CheckoutPage";
 function App() {
   return (
     <ThemeProvider>
-      <AuthProvider>
-        <AppContent />
-      </AuthProvider>
+      <AppContent />
     </ThemeProvider>
   );
 }

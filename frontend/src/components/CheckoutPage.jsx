@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowLeft, Truck, Zap, Clock, Store, CreditCard, Check, ShieldCheck } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
-import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { apiService } from '../services/api';
 
@@ -9,13 +8,12 @@ const SHIPPING_ICONS = { standard: Truck, express: Zap, overnight: Clock, pickup
 
 const CheckoutPage = ({ onBack }) => {
   const { theme } = useTheme();
-  const { user } = useAuth();
   const { cart, fetchCart } = useCart();
   const isDark = theme === 'dark';
   const [step, setStep] = useState(1);
   const [shippingMethods, setShippingMethods] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState('standard');
-  const [address, setAddress] = useState({ name: user?.name || '', street: '', city: '', state: '', zip: '', phone: '' });
+  const [address, setAddress] = useState({ name: '', street: '', city: '', state: '', zip: '', phone: '' });
   const [processing, setProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
@@ -60,7 +58,7 @@ const CheckoutPage = ({ onBack }) => {
             setOrderComplete(true);
             await fetchCart();
           },
-          prefill: { name: user?.name, email: user?.email },
+          prefill: {},  
           theme: { color: isDark ? '#1a1a1a' : '#faf9f6' }
         };
         const rzp = new window.Razorpay(options);

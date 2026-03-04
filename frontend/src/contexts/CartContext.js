@@ -1,24 +1,21 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { useAuth } from './AuthContext';
 import { apiService } from '../services/api';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const { user } = useAuth();
   const [cart, setCart] = useState({ items: [], total: 0, item_count: 0 });
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchCart = useCallback(async () => {
-    if (!user) return;
     try {
       const data = await apiService.getCart();
       setCart(data);
     } catch (err) {
       console.error('Failed to fetch cart:', err);
     }
-  }, [user]);
+  }, []);
 
   useEffect(() => { fetchCart(); }, [fetchCart]);
 

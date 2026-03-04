@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import GenderFilter from './GenderFilter';
-import { apiService } from '../services/api';
+import { collections as allCollections } from '../data/mockData';
 
 const CollectionCard = ({ collection, index }) => {
   const { theme } = useTheme();
@@ -99,17 +99,12 @@ const CollectionsSection = () => {
   }, []);
 
   useEffect(() => {
-    const fetchCollections = async () => {
-      setLoading(true);
-      try {
-        const data = await apiService.getCollections(genderFilter);
-        setCollections(data.collections);
-      } catch (err) {
-        console.error('Failed to fetch collections:', err);
-      }
-      setLoading(false);
-    };
-    fetchCollections();
+    setLoading(true);
+    const filtered = genderFilter === 'all'
+      ? allCollections
+      : allCollections.filter(c => c.gender === genderFilter || c.gender === 'unisex');
+    setCollections(filtered);
+    setLoading(false);
   }, [genderFilter]);
 
   const bg = isDark ? 'bg-[#0a0a0a]' : 'bg-[#faf9f6]';

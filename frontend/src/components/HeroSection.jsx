@@ -1,20 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowDown, LogOut, User, ShoppingBag } from 'lucide-react';
+import { ArrowDown, ShoppingBag } from 'lucide-react';
 import { heroData, aboutData } from '../data/mockData';
 import { useTheme } from '../contexts/ThemeContext';
-import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import AudioManager from './AudioManager';
 import ThemeToggle from './ThemeToggle';
 
 const HeroSection = () => {
   const { theme } = useTheme();
-  const { user, logout } = useAuth();
   const { cart, setIsOpen: setCartOpen } = useCart();
   const isDark = theme === 'dark';
   const [scrollY, setScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [showUserMenu, setShowUserMenu] = useState(false);
   const aboutRef = useRef(null);
 
   useEffect(() => {
@@ -81,33 +78,6 @@ const HeroSection = () => {
             )}
           </button>
 
-          <div className={`w-[1px] h-3 ${isDark ? 'bg-white/10' : 'bg-black/10'}`} />
-
-          {/* User */}
-          <div className="relative">
-            <button
-              onClick={() => setShowUserMenu(!showUserMenu)}
-              className={`flex items-center gap-2 ${isDark ? 'text-white/40 hover:text-white/70' : 'text-black/40 hover:text-black/70'} transition-colors`}
-              aria-label="User menu"
-              aria-expanded={showUserMenu}
-            >
-              <User size={14} />
-              <span className="text-[10px] tracking-[0.2em] uppercase">{user?.name?.split(' ')[0]}</span>
-            </button>
-            {showUserMenu && (
-              <div className={`absolute top-8 right-0 w-48 border ${isDark ? 'bg-[#111] border-white/10' : 'bg-white border-black/10'} p-3 z-50`}>
-                <p className={`text-xs ${isDark ? 'text-white/60' : 'text-black/60'} mb-1`}>{user?.name}</p>
-                <p className={`text-[10px] ${isDark ? 'text-white/30' : 'text-black/30'} mb-3`}>{user?.email}</p>
-                <button
-                  onClick={logout}
-                  className={`flex items-center gap-2 w-full text-left text-[10px] tracking-[0.2em] uppercase py-2 border-t ${isDark ? 'border-white/[0.06] text-white/40 hover:text-white/70' : 'border-black/[0.06] text-black/40 hover:text-black/70'} transition-colors`}
-                >
-                  <LogOut size={12} />
-                  Sign Out
-                </button>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Hero image with parallax */}

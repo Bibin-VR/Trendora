@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ExternalLink, ShoppingBag, ArrowRight, Heart, ChevronRight, ShoppingCart } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
-import { useAuth } from '../contexts/AuthContext';
 import { useCart } from '../contexts/CartContext';
 import GenderFilter from './GenderFilter';
-import { apiService } from '../services/api';
+import { featuredProducts as allProducts, brandShowcase, brands as allBrands } from '../data/mockData';
 
 /* ======================== PRODUCT CARD ======================== */
 const ProductCard = ({ product, index, isFavorited, onToggleFavorite, onAddToCart }) => {
@@ -137,14 +136,12 @@ const BrandCard = ({ brand }) => {
 /* ======================== MAIN FEATURED SECTION ======================== */
 const FeaturedSection = () => {
   const { theme } = useTheme();
-  const { user } = useAuth();
   const { addToCart } = useCart();
   const isDark = theme === 'dark';
   const [headerVisible, setHeaderVisible] = useState(false);
   const [brandsHeaderVisible, setBrandsHeaderVisible] = useState(false);
   const [genderFilter, setGenderFilter] = useState('all');
   const [products, setProducts] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [favorites, setFavorites] = useState(new Set());
   const [loading, setLoading] = useState(true);
   const headerRef = useRef(null);
@@ -165,61 +162,22 @@ const FeaturedSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Fetch products
+  // Filter products from mock data
   useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      try {
-        const data = await apiService.getBestDeals(genderFilter, 8);
-        setProducts(data.products);
-      } catch (err) {
-        console.error('Failed to fetch products:', err);
-      }
-      setLoading(false);
-    };
-    fetchProducts();
+    setLoading(true);
+    const filtered = genderFilter === 'all'
+      ? allProducts
+      : allProducts.filter(p => p.gender === genderFilter || p.gender === 'unisex');
+    setProducts(filtered.slice(0, 8));
+    setLoading(false);
   }, [genderFilter]);
 
-  // Fetch brands (once)
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const data = await apiService.getBrands();
-        setBrands(data.brands);
-      } catch (err) {
-        console.error('Failed to fetch brands:', err);
-      }
-    };
-    fetchBrands();
-  }, []);
-
-  // Fetch favorites
-  const fetchFavorites = useCallback(async () => {
-    if (!user) return;
-    try {
-      const data = await apiService.getFavorites();
-      setFavorites(new Set(data.favorites.map(f => f.id)));
-    } catch (err) {
-      console.error('Failed to fetch favorites:', err);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    fetchFavorites();
-  }, [fetchFavorites]);
-
-  const toggleFavorite = async (productId) => {
-    try {
-      if (favorites.has(productId)) {
-        await apiService.removeFavorite(productId);
-        setFavorites(prev => { const n = new Set(prev); n.delete(productId); return n; });
-      } else {
-        await apiService.addFavorite(productId);
-        setFavorites(prev => new Set([...prev, productId]));
-      }
-    } catch (err) {
-      console.error('Failed to toggle favorite:', err);
-    }
+  const toggleFavorite = (productId) => {
+    setFavorites(prev => {
+      const next = new Set(prev);
+      if (next.has(productId)) next.delete(productId); else next.add(productId);
+      return next;
+    });
   };
 
   const bg = isDark ? 'bg-[#0a0a0a]' : 'bg-[#faf9f6]';
@@ -309,21 +267,19 @@ const FeaturedSection = () => {
         </div>
 
         {/* Scrolling brand carousel */}
-        {brands.length > 0 && (
-          <div className="relative">
-            <div className="flex gap-4 animate-scroll-brands pl-8">
-              {[...brands, ...brands, ...brands].map((brand, i) => (
-                <BrandCard key={`brand-${i}`} brand={brand} />
-              ))}
-            </div>
+        <div className="relative">
+          <div className="flex gap-4 animate-scroll-brands pl-8">
+            {[...brandShowcase, ...brandShowcase, ...brandShowcase].map((brand, i) => (
+              <BrandCard key={`brand-${i}`} brand={brand} />
+            ))}
           </div>
-        )}
+        </div>
 
         {/* Brand logos strip */}
         <div className="mt-16 px-8 md:px-16 lg:px-24">
           <div className={`border-t border-b ${borderLine} py-8`}>
             <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
-              {brands.map((brand) => (
+              {allBrands.map((brand) => (
                 <span
                   key={brand.id}
                   className={`${isDark ? 'text-white/15 hover:text-white/40' : 'text-black/15 hover:text-black/40'} text-lg md:text-xl tracking-[0.2em] transition-colors duration-500 cursor-pointer`}

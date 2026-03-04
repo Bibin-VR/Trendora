@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Trendora/static/css/main.13eb608e.css",
-    "main.js": "/Trendora/static/js/main.c4f56d5c.js",
+    "main.css": "/Trendora/static/css/main.9aca8301.css",
+    "main.js": "/Trendora/static/js/main.bcf7401e.js",
     "index.html": "/Trendora/index.html",
-    "main.13eb608e.css.map": "/Trendora/static/css/main.13eb608e.css.map",
-    "main.c4f56d5c.js.map": "/Trendora/static/js/main.c4f56d5c.js.map"
+    "main.9aca8301.css.map": "/Trendora/static/css/main.9aca8301.css.map",
+    "main.bcf7401e.js.map": "/Trendora/static/js/main.bcf7401e.js.map"
   },
   "entrypoints": [
-    "static/css/main.13eb608e.css",
-    "static/js/main.c4f56d5c.js"
+    "static/css/main.9aca8301.css",
+    "static/js/main.bcf7401e.js"
   ]
 }

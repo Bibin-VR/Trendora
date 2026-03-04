@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./App.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
 import IntroScreen from "./components/IntroScreen";
-import AuthPage from "./components/AuthPage";
 import HeroSection from "./components/HeroSection";
 import CollectionsSection from "./components/CollectionsSection";
 import FeaturedSection from "./components/FeaturedSection";
@@ -22,35 +21,13 @@ function App() {
 }
 
 function AppContent() {
-  const { user, loading } = useAuth();
   const [entered, setEntered] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
-
-  if (loading) {
-    return (
-      <div className="App min-h-screen theme-bg flex items-center justify-center" role="status" aria-label="Loading">
-        <div className="text-center">
-          <h1 className="text-3xl tracking-tight mb-2" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>TRENDORA</h1>
-          <div className="w-32 h-[1px] bg-current opacity-10 mx-auto">
-            <div className="h-full bg-current opacity-50 animate-pulse" style={{ width: '60%' }} />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (!entered) {
     return (
       <div className="App min-h-screen theme-bg">
         <IntroScreen onEnter={() => setEntered(true)} />
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="App min-h-screen theme-bg">
-        <AuthPage onBack={() => setEntered(false)} />
       </div>
     );
   }

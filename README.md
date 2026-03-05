@@ -4,7 +4,7 @@ A modern fashion e-commerce web application built with React and a Python/FastAP
 
 ## 🚀 Live Demo
 
-Frontend: [https://Bibin-VR.github.io/Trendora](https://Bibin-VR.github.io/Trendora)
+Frontend: [https://tendora-f4b48.web.app](https://tendora-f4b48.web.app)
 
 ## 🛠️ Tech Stack
 

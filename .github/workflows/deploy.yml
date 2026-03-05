@@ -38,7 +38,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ''
-          projectId: tendora-f4b48
+          projectId: trendora-studio
           channelId: live
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

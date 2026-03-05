@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "tendora-f4b48"
+    "default": "trendora-studio"
+  },
+  "targets": {
+    "trendora-studio": {
+      "hosting": {
+        "trendora": [
+          "trendora-studio-86165"
+        ]
+      }
+    }
   }
 }

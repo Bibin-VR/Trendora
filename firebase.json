@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "trendora-studio-86165",
     "public": "frontend/build",
     "ignore": [
       "firebase.json",

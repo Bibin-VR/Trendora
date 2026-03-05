@@ -4,7 +4,7 @@ A modern fashion e-commerce web application built with React and a Python/FastAP
 
 ## 🚀 Live Demo
 
-Frontend: [https://trendora-studio-86165.web.app](https://trendora-studio-86165.web.app)
+Frontend: [https://trendora-studio.web.app](https://trendora-studio.web.app)
 
 ## 🛠️ Tech Stack
 
